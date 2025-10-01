@@ -1,11 +1,12 @@
 const app = require("express")();
 const Discord = require('discord.js');
 const chalk = require('chalk');
-require('dotenv').config('./.env');
+require('dotenv').config(); // fixed dotenv config call
 const axios = require('axios');
 const webhook = require("./config/webhooks.json");
 const config = require("./config/bot.js");
 const webHooksArray = ['startLogs', 'shardLogs', 'errorLogs', 'dmLogs', 'voiceLogs', 'serverLogs', 'serverLogs2', 'commandLogs', 'consoleLogs', 'warnLogs', 'voiceErrorLogs', 'creditLogs', 'evalLogs', 'interactionLogs'];
+
 // Check if .env webhook_id and webhook_token are set
 if (process.env.WEBHOOK_ID && process.env.WEBHOOK_TOKEN) {
     for (const webhookName of webHooksArray) {
@@ -13,6 +14,7 @@ if (process.env.WEBHOOK_ID && process.env.WEBHOOK_TOKEN) {
         webhook[webhookName].token = process.env.WEBHOOK_TOKEN;
     }
 }
+
 console.clear();
 console.log(chalk.blue(chalk.bold(`System`)), (chalk.white(`>>`)), (chalk.green(`Starting up`)), (chalk.white(`...`)))
 console.log(`\u001b[0m`)
@@ -70,7 +72,7 @@ process.on('warning', warn => {
         .addFields([
             {
                 name: `Warn`,
-                value: `\`\`\`${warn}\`\`\``,
+                value: `${warn}`,
             },
         ])
     warnLogs.send({
